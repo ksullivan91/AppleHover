@@ -1,6 +1,6 @@
 # applehover
 
-The `useAppleHover` hook and AppleHoverWrapper are designed to provide an interactive hover effect similar to the one seen on Apple TV apps. It allows elements to move slightly in 3D space when hovered, giving a sense of depth and responsiveness.
+The `useAppleHover` hook and `AppleHoverWrapper` are designed to provide an interactive hover effect similar to the one seen on Apple TV apps. It allows elements to move slightly in 3D space when hovered, giving a sense of depth and responsiveness.
 
 ## Installation
 
