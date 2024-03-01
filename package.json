@@ -3,7 +3,7 @@
   "license": "MIT",
   "private": false,
   "description": "Attaches the apple hover effect to any element",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "main": "dist/appleHover.umd.js",
   "module": "dist/appleHover.es.js",

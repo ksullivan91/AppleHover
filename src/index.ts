@@ -1,1 +1,5 @@
-export { useAppleHover, AppleHover, type AppleHoverProps } from './appleHover';
+export {
+  useAppleHover,
+  AppleHover as default,
+  type AppleHoverProps,
+} from './appleHover';
