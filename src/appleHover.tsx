@@ -41,11 +41,11 @@ export const useAppleHover = ({
     if (!card) return;
     if (card.firstElementChild?.clientHeight) {
       card.style.setProperty(
-        'height',
+        'max-height',
         `${card.firstElementChild.clientHeight}px`
       );
       card.style.setProperty(
-        'width',
+        'max-width',
         `${card.firstElementChild.clientWidth}px`
       );
     }
@@ -150,6 +150,7 @@ export const AppleHover: React.FC<AppleHoverProps> = ({
     <div
       ref={hoverRef as React.RefObject<HTMLDivElement>}
       className='apple-card'
+      style={{ width: '100%', height: '100%' }}
     >
       {children}
     </div>
