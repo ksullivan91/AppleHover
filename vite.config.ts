@@ -9,6 +9,7 @@ export default defineConfig({
     react(), // Enables Vite to handle React files
     dts({
       insertTypesEntry: true,
+      exclude: ['**/main.tsx'],
     }),
   ],
   build: {

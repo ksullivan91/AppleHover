@@ -1,6 +1,6 @@
 # applehover
 
-The `useAppleHover` hook and `AppleHoverWrapper` are designed to provide an interactive hover effect similar to the one seen on Apple TV apps. It allows elements to move slightly in 3D space when hovered, giving a sense of depth and responsiveness.
+The `useAppleHover` React hook and `AppleHover` React component are designed to provide an interactive hover effect similar to the one seen on Apple TV apps. It allows elements to move slightly in 3D space when hovered, giving a sense of depth and responsiveness.
 
 ## Installation
 
@@ -39,17 +39,17 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 ##
-Alternatively, the `AppleHoverWrapper` component takes a single child (which can be any React node) and applies the Apple hover effect to it using the useAppleHover hook. The effect's behavior can be customized via props passed to the AppleHoverWrapper component.
+Alternatively, the `AppleHover` component takes a single child (which can be any React node) and applies the Apple hover effect to it using the useAppleHover hook. The effect's behavior can be customized via props passed to the AppleHover component.
 
 This approach allows you to easily add an interactive hover effect to any component or element in your application without directly managing ref hooks or event listeners each time.
 
 ```jsx
 import React from 'react';
-import AppleHoverWrapper from './AppleHoverWrapper';
+import AppleHover from './AppleHover';
 
 const MyComponent = () => {
   return (
-    <AppleHoverWrapper
+    <AppleHover
       scale={1.05}
       duration={0.5}
       shadowColor="d3d3d3"
@@ -59,7 +59,7 @@ const MyComponent = () => {
       <div>
         Hover over me!
       </div>
-    </AppleHoverWrapper>
+    </AppleHover>
   );
 };
 

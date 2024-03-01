@@ -1,8 +1,8 @@
-import { useRef, useEffect, MouseEvent } from 'react';
+import { useRef, useEffect } from 'react';
 
 export const useAppleHover = ({
-  scale = 1.1,
-  duration = 0.5,
+  scale = 1.01,
+  duration = 0.25,
   transitionTimingFunction = 'linear',
   shadowTimingFunction = 'cubic-bezier(0.215, 0.61, 0.355, 1)',
   shadow = true,
@@ -11,7 +11,7 @@ export const useAppleHover = ({
   cardBackgroundOpacity = 1.0,
   shadowOpacity = 0.15,
   delay = 0,
-  modifier = 5,
+  modifier = 3,
 }) => {
   const cardRef = useRef<HTMLElement>(null);
 
@@ -39,28 +39,60 @@ export const useAppleHover = ({
   useEffect(() => {
     const card = cardRef.current;
     if (!card) return;
-
+    if (card.firstElementChild?.clientHeight) {
+      card.style.setProperty(
+        'height',
+        `${card.firstElementChild.clientHeight}px`
+      );
+      card.style.setProperty(
+        'width',
+        `${card.firstElementChild.clientWidth}px`
+      );
+    }
     const stylizeCards = () => {
       const rgbColor = hexToRgb(cardBackgroundColor);
       card.style.transition = `transform ${duration}s ${transitionTimingFunction} ${delay}s, box-shadow ${duration}s ${shadowTimingFunction} ${delay}s`;
       card.style.background = `rgba(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]}, ${cardBackgroundOpacity})`;
     };
 
-    const mouseMove = (event: MouseEvent) => {
+    const mouseMove = (event: any) => {
+      console.log('mouseMove');
       const halfW = card.clientWidth / 2,
+        perspective = card.offsetWidth * 1.3333333,
         halfH = card.clientHeight / 2,
-        coorX = halfW - (event.pageX - card.getBoundingClientRect().left),
-        coorY = halfH - (event.pageY - card.getBoundingClientRect().top),
-        degX = (coorY / halfH) * modifier, // max. degree = modifier
-        degY = (coorX / halfW) * -modifier; // max. degree = modifier
-      const perspective = card.offsetWidth * 1.3333333;
-      const shadowRgb = hexToRgb(shadowColor);
+        coorX = halfW - (event.pageX - card.offsetLeft),
+        coorY = halfH - (event.pageY - card.offsetTop),
+        degX = (coorY / halfH) * modifier, // max. degree = 5
+        degY = (coorX / halfW) * -modifier; // max. degree = 5
 
-      card.style.transform = `perspective(${perspective}px) translate3d(0, -2px, 0) scale(${scale}) rotateX(${degX}deg) rotateY(${degY}deg)`;
+      card.style.setProperty(
+        'transform',
+        'perspective( ' +
+          perspective +
+          'px ) translate3d( 0, -2px, 0 ) scale( ' +
+          scale +
+          ' ) rotateX(' +
+          degX +
+          'deg) rotateY(' +
+          degY +
+          'deg)'
+      );
       if (shadow)
-        card.style.boxShadow = `${-degY}px ${degX}px 8px 0px rgba(${
-          shadowRgb[0]
-        }, ${shadowRgb[1]}, ${shadowRgb[2]}, ${shadowOpacity})`;
+        card.style.setProperty(
+          'box-shadow',
+          -degY +
+            'px ' +
+            degX +
+            'px 8px 0px rgba(' +
+            shadowColor[0] +
+            ', ' +
+            shadowColor[1] +
+            ', ' +
+            shadowColor[2] +
+            ', ' +
+            shadowOpacity +
+            ')'
+        );
     };
 
     const mouseOut = () => {
@@ -69,11 +101,11 @@ export const useAppleHover = ({
     };
 
     stylizeCards();
-    card.addEventListener('mousemove', () => mouseMove);
+    card.addEventListener('mousemove', mouseMove);
     card.addEventListener('mouseleave', mouseOut);
 
     return () => {
-      card.removeEventListener('mousemove', () => mouseMove);
+      card.removeEventListener('mousemove', mouseMove);
       card.removeEventListener('mouseleave', mouseOut);
     };
   }, [
@@ -108,7 +140,7 @@ export interface AppleHoverProps {
   children: React.ReactNode;
 }
 
-export const AppleHoverWrapper: React.FC<AppleHoverProps> = ({
+export const AppleHover: React.FC<AppleHoverProps> = ({
   children,
   ...props
 }) => {
